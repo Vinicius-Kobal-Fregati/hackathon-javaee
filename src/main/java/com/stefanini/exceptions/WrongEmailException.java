@@ -1,6 +1,6 @@
 package com.stefanini.exceptions;
 
-public class WrongEmailException extends Exception{
+public class WrongEmailException extends BadRequestException{
     public WrongEmailException() {
         super();
     }

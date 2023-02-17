@@ -8,7 +8,9 @@ import com.stefanini.interfaces.EntityMessageConstants;
 import com.stefanini.repository.UserRepository;
 import com.stefanini.utils.PasswordEncryptor;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,6 +18,7 @@ import java.util.List;
 import static com.stefanini.interfaces.EntityMessageConstants.PATTERN_BIRTHDAY_DATE;
 import static com.stefanini.interfaces.RegexConstants.*;
 
+@ApplicationScoped
 public class UserService {
 
     @Inject
@@ -29,8 +32,9 @@ public class UserService {
         return userRepository.createUser(receivedUser);
     }
 
-    public UserWithoutPasswordDTO updateUser(User user) throws GreaterThanAllowedException, OutOfPatternException,
+    public UserWithoutPasswordDTO updateUser(UserForCreateDTO userForCreateDTO) throws GreaterThanAllowedException, OutOfPatternException,
             WrongEmailException, NotEmptyException, NotNullException, WrongLengthException {
+        User user = new User(userForCreateDTO);
         descryptPassword(user);
         verificaAtributosDoUsuario(user);
         user.setDataDeAtualizacao(LocalDateTime.now());

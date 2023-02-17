@@ -1,6 +1,6 @@
 package com.stefanini.exceptions;
 
-public class NotEmptyException extends Exception{
+public class NotEmptyException extends BadRequestException{
     public NotEmptyException() {
         super();
     }

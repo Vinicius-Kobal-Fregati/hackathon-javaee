@@ -1,6 +1,6 @@
 package com.stefanini.exceptions;
 
-public class ObjectNotFoundException extends Exception{
+public class ObjectNotFoundException extends BadRequestException{
     public ObjectNotFoundException() {
         super();
     }

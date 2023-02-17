@@ -1,6 +1,6 @@
 package com.stefanini.exceptions;
 
-public class NotNullException extends Exception{
+public class NotNullException extends BadRequestException{
     public NotNullException() {
         super();
     }

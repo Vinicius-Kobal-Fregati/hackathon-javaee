@@ -16,6 +16,7 @@ public class User {
     @Id
     @GeneratedValue(generator = "user_seq", strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = "user_seq", allocationSize = 1)
+    @Column
     private Long id;
     @Column(nullable = false)
     @Max(value = 50, message = MAX_50_CHARACTERS)
@@ -56,7 +57,7 @@ public class User {
         this.nome = user.getNome();
         this.email = user.getEmail();
         this.senha = user.getSenha();
-        this.dataDeNascimento = user.getDataDeNascimento();
+        this.dataDeNascimento = LocalDate.now();
         this.dataDeCriacao = LocalDateTime.now();
     }
 

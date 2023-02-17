@@ -6,7 +6,7 @@ public class UserForCreateDTO {
     private String login;
     private String email;
     private String senha;
-    private LocalDate dataDeNascimento;
+    //String dataDeNascimento;
 
     public String getNome() {
         return nome;
@@ -32,13 +32,16 @@ public class UserForCreateDTO {
         this.email = email;
     }
 
-    public LocalDate getDataDeNascimento() {
+    /*
+    public String getDataDeNascimento() {
         return dataDeNascimento;
     }
 
-    public void setDataDeNascimento(LocalDate dataDeNascimento) {
+    public void setDataDeNascimento(String dataDeNascimento) {
         this.dataDeNascimento = dataDeNascimento;
     }
+
+     */
 
     public String getSenha() {
         return senha;

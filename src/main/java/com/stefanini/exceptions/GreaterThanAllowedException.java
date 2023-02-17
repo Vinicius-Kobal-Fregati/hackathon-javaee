@@ -1,6 +1,6 @@
 package com.stefanini.exceptions;
 
-public class GreaterThanAllowedException extends Exception{
+public class GreaterThanAllowedException extends BadRequestException{
     public GreaterThanAllowedException() {
         super();
     }

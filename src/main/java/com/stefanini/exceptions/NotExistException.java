@@ -1,6 +1,6 @@
 package com.stefanini.exceptions;
 
-public class NotExistException extends Exception{
+public class NotExistException extends BadRequestException{
     public NotExistException() {
         super();
     }
