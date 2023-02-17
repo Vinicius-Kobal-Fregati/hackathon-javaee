@@ -5,7 +5,7 @@ import com.stefanini.entity.User;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public class UserDtoWithoutPassword {
+public class UserWithoutPasswordDTO {
     private Long id;
     private String nome;
     private String login;
@@ -14,7 +14,7 @@ public class UserDtoWithoutPassword {
     private LocalDateTime dataDeCriacao;
     private LocalDateTime dataDeAtualizacao;
 
-    public UserDtoWithoutPassword(Long id, String nome, String login,
+    public UserWithoutPasswordDTO(Long id, String nome, String login,
                                   String email, LocalDate dataDeNascimento,
                                   LocalDateTime dataDeCriacao, LocalDateTime dataDeAtualizacao) {
         this.id = id;
@@ -26,7 +26,7 @@ public class UserDtoWithoutPassword {
         this.dataDeAtualizacao = dataDeAtualizacao;
     }
 
-    public UserDtoWithoutPassword(User user) {
+    public UserWithoutPasswordDTO(User user) {
         this.id = user.getId();
         this.nome = user.getNome();
         this.login = user.getLogin();

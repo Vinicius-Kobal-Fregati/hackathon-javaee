@@ -1,5 +1,7 @@
 package com.stefanini.entity;
 
+import com.stefanini.dto.UserForCreateDTO;
+
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.time.LocalDate;
@@ -48,6 +50,14 @@ public class User {
 
     public User() {
         dataDeCriacao = LocalDateTime.now();
+    }
+    public User(UserForCreateDTO user) {
+        this.login = user.getLogin();
+        this.nome = user.getNome();
+        this.email = user.getEmail();
+        this.senha = user.getSenha();
+        this.dataDeNascimento = user.getDataDeNascimento();
+        this.dataDeCriacao = LocalDateTime.now();
     }
 
     public Long getId() { return id; }
