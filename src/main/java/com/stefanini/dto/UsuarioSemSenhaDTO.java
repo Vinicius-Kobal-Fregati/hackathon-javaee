@@ -1,11 +1,11 @@
 package com.stefanini.dto;
 
-import com.stefanini.entity.User;
+import com.stefanini.entity.Usuario;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public class UserWithoutPasswordDTO {
+public class UsuarioSemSenhaDTO {
     private Long id;
     private String nome;
     private String login;
@@ -14,9 +14,9 @@ public class UserWithoutPasswordDTO {
     private LocalDateTime dataDeCriacao;
     private LocalDateTime dataDeAtualizacao;
 
-    public UserWithoutPasswordDTO(Long id, String nome, String login,
-                                  String email, LocalDate dataDeNascimento,
-                                  LocalDateTime dataDeCriacao, LocalDateTime dataDeAtualizacao) {
+    public UsuarioSemSenhaDTO(Long id, String nome, String login,
+                              String email, LocalDate dataDeNascimento,
+                              LocalDateTime dataDeCriacao, LocalDateTime dataDeAtualizacao) {
         this.id = id;
         this.nome = nome;
         this.login = login;
@@ -26,14 +26,14 @@ public class UserWithoutPasswordDTO {
         this.dataDeAtualizacao = dataDeAtualizacao;
     }
 
-    public UserWithoutPasswordDTO(User user) {
-        this.id = user.getId();
-        this.nome = user.getNome();
-        this.login = user.getLogin();
-        this.email = user.getEmail();
-        this.dataDeNascimento = user.getDataDeNascimento();
-        this.dataDeCriacao = user.getDataDeCriacao();
-        this.dataDeAtualizacao = user.getDataDeAtualizacao();
+    public UsuarioSemSenhaDTO(Usuario usuario) {
+        this.id = usuario.getId();
+        this.nome = usuario.getNome();
+        this.login = usuario.getLogin();
+        this.email = usuario.getEmail();
+        this.dataDeNascimento = usuario.getDataDeNascimento();
+        this.dataDeCriacao = usuario.getDataDeCriacao();
+        this.dataDeAtualizacao = usuario.getDataDeAtualizacao();
     }
 
     public Long getId() {

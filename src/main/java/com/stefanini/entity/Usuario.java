@@ -1,54 +1,57 @@
 package com.stefanini.entity;
 
-import com.stefanini.dto.UserForCreateDTO;
+import com.stefanini.dto.UsuarioCriacaoDTO;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import static com.stefanini.interfaces.EntityMessageConstants.*;
-import static com.stefanini.interfaces.RegexConstants.*;
+import static com.stefanini.interfaces.MensagensConstantes.*;
+import static com.stefanini.interfaces.RegexConstantes.SENHA_REGEX;
 
 @Entity
 @Table(name = "tb_usuario")
-public class User {
+public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private Long id;
     @Column(nullable = false)
-    @Size(max = 50, message = MAX_50_CHARACTERS)
-    @NotEmpty(message = NOT_EMPTY)
-    @NotNull(message = NOT_NULL)
+    @Size(max = 50, message = MAXIMO_50_CARACTERES)
+    @NotEmpty(message = NAO_VAZIO)
+    @NotNull(message = NAO_NULO)
     private String nome;
     @Column(nullable = false, unique = true)
-    @NotNull(message = NOT_NULL)
-    @Size(min = 5, max = 20, message = BETWEEN_5_TO_20_CHARACTERS)
+    @NotNull(message = NAO_NULO)
+    @Size(min = 5, max = 20, message = ENTRE_5_A_20_CARACTERES)
     private String login;
     @Column(nullable = false)
-    @NotNull(message = NOT_NULL)
-    @NotEmpty(message = NOT_EMPTY)
+    @NotNull(message = NAO_NULO)
+    @NotEmpty(message = NAO_VAZIO)
     private String email;
     @Column(nullable = false)
-    @NotNull(message = NOT_NULL)
-    @NotEmpty(message = NOT_EMPTY)
-    @Size(min = 4, max = 10, message = BETWEEN_4_TO_10_CARACTERS)
-    @Pattern(regexp = PASSWORD_REGEX)
+    @NotNull(message = NAO_NULO)
+    @NotEmpty(message = NAO_VAZIO)
+    @Size(min = 4, max = 10, message = ENTRE_4_A_10_CARACTERES)
+    @Pattern(regexp = SENHA_REGEX)
     private String senha;
     @Column(name = "data_de_nascimento")
     private LocalDate dataDeNascimento;
     @Column(name = "data_de_criacao", nullable = false)
-    @NotNull(message = NOT_NULL)
+    @NotNull(message = NAO_NULO)
     private LocalDateTime dataDeCriacao;
     @Column(name = "data_de_atualizacao")
-    //@Pattern(regexp = LOCAL_DATE_TIME_REGEX, message = PATTERN_DATE_TIME)
     private LocalDateTime dataDeAtualizacao;
 
-    public User() {
+    public Usuario() {
         dataDeCriacao = LocalDateTime.now();
     }
-    public User(UserForCreateDTO user) {
+
+    public Usuario(UsuarioCriacaoDTO user) {
         this.login = user.getLogin();
         this.nome = user.getNome();
         this.email = user.getEmail();
@@ -57,8 +60,14 @@ public class User {
         this.dataDeCriacao = LocalDateTime.now();
     }
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getNome() {
         return nome;
     }

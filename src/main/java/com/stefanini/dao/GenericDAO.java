@@ -1,7 +1,5 @@
 package com.stefanini.dao;
 
-import org.hibernate.exception.ConstraintViolationException;
-
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -9,11 +7,11 @@ import javax.transaction.Transactional;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
-public class GenericDAO<T, I>  {
+public class GenericDAO<T, I> {
 
     @PersistenceContext(unitName = "PU")
     EntityManager em;
-    
+
     Class<T> clazz;
 
     public GenericDAO() {
@@ -21,15 +19,15 @@ public class GenericDAO<T, I>  {
     }
 
     @Transactional
-    public void save(T t){
+    public void save(T t) {
         em.persist(t);
     }
 
-    public T findById(I id){
+    public T findById(I id) {
         return em.find(clazz, id);
     }
 
-    public <T> List<T> listAll(){
+    public <T> List<T> listAll() {
         CriteriaBuilder builder = em.getCriteriaBuilder();
         CriteriaQuery<T> query = (CriteriaQuery<T>) builder.createQuery(clazz);
         query.from(clazz);
@@ -37,12 +35,12 @@ public class GenericDAO<T, I>  {
     }
 
     @Transactional
-    public T update(T t){
+    public T update(T t) {
         return em.merge(t);
     }
 
     @Transactional
-    public void delete(I id){
+    public void delete(I id) {
         T t = findById(id);
         em.remove(t);
     }
@@ -52,7 +50,7 @@ public class GenericDAO<T, I>  {
     }
 
     public <J> TypedQuery<J> createQuery(String query, Class<J> classe) {
-        return (TypedQuery<J>) em.createQuery(query, classe);
+        return em.createQuery(query, classe);
     }
 
     public Query createNativeQuery(String query) {

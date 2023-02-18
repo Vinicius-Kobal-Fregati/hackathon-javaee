@@ -1,19 +1,19 @@
 package com.stefanini.dto;
 
-import javax.persistence.Column;
 import java.time.LocalDate;
-public class UserForCreateDTO {
+
+public class UsuarioCriacaoDTO {
     private String nome;
     private String login;
     private String email;
     private String senha;
     private LocalDate dataDeNascimento;
 
-    public UserForCreateDTO() {
+    public UsuarioCriacaoDTO() {
 
     }
 
-    public UserForCreateDTO(String nome, String login, String email, String senha, LocalDate dataDeNascimento) {
+    public UsuarioCriacaoDTO(String nome, String login, String email, String senha, LocalDate dataDeNascimento) {
         this.nome = nome;
         this.login = login;
         this.email = email;
