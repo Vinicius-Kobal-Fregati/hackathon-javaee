@@ -47,3 +47,27 @@ Use o seguinte comando para iniciar o servidor:<br/>
 
 Opcionais:
 - Docker([guia](https://docs.docker.com/))
+
+## Endpoints criados
+
+|Verbo | Endpoint | Parâmetro | Body|
+|---|---|---|---|
+|GET|usuarios|N/A|Schema usuário|
+|POST|usuarios|N/A|Schema usuário|
+|PUT|usuarios/{id}|id|Schema usuário|
+|DELETE|usuarios/{id}|id|N/A|
+|GET|usuarios/emails|N/A|N/A|
+|GET|usuarios/aniversariantes/{numeroDoMes}|numeroDoMes|N/A|
+|GET|usuarios/primeira-letra-nome/{letra}|letra|N/A|
+
+## Schema usuário:
+```json
+{
+  "id": 1,
+  "nome": "string",
+  "login": "string",
+  "email": "string",
+  "senha": "string",
+  "dataDeNascimento": "0000/00/00"
+}
+```
