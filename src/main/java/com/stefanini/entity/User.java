@@ -14,12 +14,11 @@ import static com.stefanini.interfaces.RegexConstants.*;
 @Table(name = "tb_usuario")
 public class User {
     @Id
-    @GeneratedValue(generator = "user_seq", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "user_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private Long id;
     @Column(nullable = false)
-    @Max(value = 50, message = MAX_50_CHARACTERS)
+    @Size(max = 50, message = MAX_50_CHARACTERS)
     @NotEmpty(message = NOT_EMPTY)
     @NotNull(message = NOT_NULL)
     private String nome;
@@ -38,15 +37,12 @@ public class User {
     @Pattern(regexp = PASSWORD_REGEX)
     private String senha;
     @Column(name = "data_de_nascimento")
-    @Pattern(regexp = DAY_OF_BIRTH_REGEX)
     private LocalDate dataDeNascimento;
     @Column(name = "data_de_criacao", nullable = false)
     @NotNull(message = NOT_NULL)
-    @NotEmpty(message = NOT_EMPTY)
-    @Pattern(regexp = LOCAL_DATE_TIME_REGEX, message = PATTERN_DATE_TIME)
     private LocalDateTime dataDeCriacao;
     @Column(name = "data_de_atualizacao")
-    @Pattern(regexp = LOCAL_DATE_TIME_REGEX, message = PATTERN_DATE_TIME)
+    //@Pattern(regexp = LOCAL_DATE_TIME_REGEX, message = PATTERN_DATE_TIME)
     private LocalDateTime dataDeAtualizacao;
 
     public User() {
@@ -57,7 +53,7 @@ public class User {
         this.nome = user.getNome();
         this.email = user.getEmail();
         this.senha = user.getSenha();
-        this.dataDeNascimento = LocalDate.now();
+        this.dataDeNascimento = user.getDataDeNascimento();
         this.dataDeCriacao = LocalDateTime.now();
     }
 

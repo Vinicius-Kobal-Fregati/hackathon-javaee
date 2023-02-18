@@ -5,15 +5,16 @@ import com.stefanini.dto.UserWithoutPasswordDTO;
 import com.stefanini.entity.User;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
-import java.time.LocalDate;
-import java.time.Month;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @ApplicationScoped
 public class UserRepository extends GenericDAO<User, Long> {
+
     @Transactional
     public UserWithoutPasswordDTO createUser(User user) {
         this.save(user);
@@ -33,40 +34,48 @@ public class UserRepository extends GenericDAO<User, Long> {
 
     public List<UserWithoutPasswordDTO> listAllUsers() {
         List<User> users = this.listAll();
-        List<UserWithoutPasswordDTO> userWithoutPasswordDTOS =
-                users.stream().map(UserWithoutPasswordDTO::new).collect(Collectors.toList());
-        return userWithoutPasswordDTOS;
+        return users.stream().map(UserWithoutPasswordDTO::new).collect(Collectors.toList());
     }
 
-    public UserWithoutPasswordDTO findUser(Long id) {
+    public UserWithoutPasswordDTO findUserAndReturnDTO(Long id) {
         User user = findById(id);
-        return new UserWithoutPasswordDTO(user);
+        return user != null ? new UserWithoutPasswordDTO(user): null;
     }
 
-    public List<UserWithoutPasswordDTO> listBirthday() {
-        Month month = LocalDate.now().getMonth();
-        String queryDb = "SELECT * FROM tb_usuario WHERE MONTH(data_de_nascimento) = " + month + " ORDER BY nome";
-        TypedQuery<User> resultQuery = this.createQuery(queryDb);
-        List<UserWithoutPasswordDTO> users =
-                resultQuery.getResultStream().map(UserWithoutPasswordDTO::new)
-                        .collect(Collectors.toList());
+    public User findUser(Long id) {
+        return findById(id);
+    }
 
-        return users;
+    public List<UserWithoutPasswordDTO> listBirthday(Integer month) {
+        Stream<User> userStream = this.createQuery("FROM User user WHERE MONTH(dataDeNascimento) = :mes " +
+                        "ORDER BY user.nome", User.class)
+                .setParameter("mes", month)
+                .getResultStream();
+
+        return userStream.map(UserWithoutPasswordDTO::new).collect(Collectors.toList());
     }
 
     public List<String> listEmailProvider() {
-        String queryDb = "SELECT DISTINCT SUBSTRING(email, (PATINDEX('%@%', email) + 1), " +
-                "LEN(email)) AS domain_email FROM tb_usuario";
-        TypedQuery<String> query = this.createQuery(queryDb);
-        List<String> domainProviders = query.getResultStream().collect(Collectors.toList());
-        return domainProviders;
+        return createQuery("SELECT DISTINCT SUBSTRING(email, LOCATE('@', email) + 1) " +
+                "AS provedores FROM User ORDER BY provedores", String.class)
+                .getResultList();
     }
 
     public List<UserWithoutPasswordDTO> listFirstLetterInName(Character character) {
-        String queryDb = "SELECT id, nome, login, email, data_de_nascimento, data_de_criacao, data_de_atualizacao " +
-                "FROM tb_usuario WHERE nome LIKE " + character + "%";
-        TypedQuery<User> resultadoQuery = this.createQuery(queryDb);
-        List<UserWithoutPasswordDTO> users = resultadoQuery.getResultStream().map(UserWithoutPasswordDTO::new).collect(Collectors.toList());
-        return users;
+        TypedQuery<User> query = this.createQuery("SELECT user FROM User user WHERE user.nome LIKE :nome");
+        Stream<User> resultadoQuery = query.setParameter("nome", character + "%")
+                .getResultStream();
+        return resultadoQuery.map(UserWithoutPasswordDTO::new)
+                .collect(Collectors.toList());
+    }
+
+    public User findUserByLogin(String login) {
+        try {
+            return createQuery("SELECT user FROM User user WHERE user.login = :login", User.class)
+                    .setParameter("login", login)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 }
