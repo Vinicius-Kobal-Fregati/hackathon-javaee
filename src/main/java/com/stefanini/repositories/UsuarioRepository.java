@@ -1,8 +1,8 @@
-package com.stefanini.repository;
+package com.stefanini.repositories;
 
 import com.stefanini.dao.GenericDAO;
 import com.stefanini.dto.UsuarioSemSenhaDTO;
-import com.stefanini.entity.Usuario;
+import com.stefanini.entities.Usuario;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.NoResultException;

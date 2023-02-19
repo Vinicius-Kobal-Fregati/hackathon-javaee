@@ -5,7 +5,7 @@ import com.stefanini.dto.UsuarioSemSenhaDTO;
 import com.stefanini.exceptions.BadRequestException;
 import com.stefanini.exceptions.NaoExisteException;
 import com.stefanini.exceptions.ObjetoNaoEncontradoException;
-import com.stefanini.service.UsuarioService;
+import com.stefanini.services.UsuarioService;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;

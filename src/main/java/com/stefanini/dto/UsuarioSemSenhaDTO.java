@@ -1,6 +1,6 @@
 package com.stefanini.dto;
 
-import com.stefanini.entity.Usuario;
+import com.stefanini.entities.Usuario;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

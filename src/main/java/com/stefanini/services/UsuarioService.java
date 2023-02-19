@@ -1,11 +1,11 @@
-package com.stefanini.service;
+package com.stefanini.services;
 
 import com.stefanini.dto.UsuarioCriacaoDTO;
 import com.stefanini.dto.UsuarioSemSenhaDTO;
-import com.stefanini.entity.Usuario;
+import com.stefanini.entities.Usuario;
 import com.stefanini.exceptions.*;
 import com.stefanini.interfaces.MensagensConstantes;
-import com.stefanini.repository.UsuarioRepository;
+import com.stefanini.repositories.UsuarioRepository;
 import com.stefanini.utils.EncriptadorSenha;
 
 import javax.enterprise.context.ApplicationScoped;
