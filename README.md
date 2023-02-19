@@ -52,7 +52,7 @@ Opcionais:
 
 |Verbo | Endpoint | Parâmetro | Body|
 |---|---|---|---|
-|GET|usuarios|N/A|Schema usuário|
+|GET|usuarios|N/A|N/A|
 |POST|usuarios|N/A|Schema usuário|
 |PUT|usuarios/{id}|id|Schema usuário|
 |DELETE|usuarios/{id}|id|N/A|
@@ -71,3 +71,5 @@ Opcionais:
   "dataDeNascimento": "0000/00/00"
 }
 ```
+
+A senha deve ser escrita de forma criptografada no padrão base64.
