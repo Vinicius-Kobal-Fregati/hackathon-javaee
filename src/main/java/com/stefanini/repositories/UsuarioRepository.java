@@ -33,8 +33,9 @@ public class UsuarioRepository extends GenericDAO<Usuario, Long> {
     }
 
     public List<UsuarioSemSenhaDTO> listaTodosUsuarios() {
-        List<Usuario> usuarios = this.listAll();
-        return usuarios.stream().map(UsuarioSemSenhaDTO::new).collect(Collectors.toList());
+        Stream<Usuario> usuarios = createQuery("FROM Usuario ORDER BY nome", Usuario.class)
+                .getResultStream();
+        return usuarios.map(UsuarioSemSenhaDTO::new).collect(Collectors.toList());
     }
 
     public UsuarioSemSenhaDTO buscaUsuarioRetornaDTO(Long id) {
