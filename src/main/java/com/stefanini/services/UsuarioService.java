@@ -1,11 +1,11 @@
-package com.stefanini.service;
+package com.stefanini.services;
 
 import com.stefanini.dto.UsuarioCriacaoDTO;
 import com.stefanini.dto.UsuarioSemSenhaDTO;
-import com.stefanini.entity.Usuario;
+import com.stefanini.entities.Usuario;
 import com.stefanini.exceptions.*;
 import com.stefanini.interfaces.MensagensConstantes;
-import com.stefanini.repository.UsuarioRepository;
+import com.stefanini.repositories.UsuarioRepository;
 import com.stefanini.utils.EncriptadorSenha;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -39,9 +39,8 @@ public class UsuarioService {
             realizaAtribuicoes(usuarioRetornado, usuario);
             usuarioRetornado.setDataDeAtualizacao(LocalDateTime.now());
             return usuarioRepository.atualizaUsuario(usuarioRetornado);
-        } else {
-            return criaUsuario(usuario);
         }
+        throw new ObjetoNaoEncontradoException("Nenhum usuário foi encontrado com esse id");
     }
 
     public void apagaUsuario(Long id) throws NaoExisteException {
@@ -51,45 +50,24 @@ public class UsuarioService {
         usuarioRepository.apagaUsuario(id);
     }
 
-    public List<UsuarioSemSenhaDTO> listaAniversariantes(Integer mes) throws ObjetoNaoEncontradoException {
-        List<UsuarioSemSenhaDTO> users = usuarioRepository.listaAniversariantes(mes);
-        if (users.size() < 1) {
-            throw new ObjetoNaoEncontradoException("Nenhum aniversariante encontrado");
-        }
-        return users;
+    public List<UsuarioSemSenhaDTO> listaAniversariantes(Integer mes) {
+        return usuarioRepository.listaAniversariantes(mes);
     }
 
-    public List<String> listaProvedoresEmail() throws ObjetoNaoEncontradoException {
-        List<String> listEmailProvider = usuarioRepository.listaProvedoresEmail();
-        if (listEmailProvider.size() < 1) {
-            throw new ObjetoNaoEncontradoException("Nenhum provedor encontrado");
-        }
-        return listEmailProvider;
+    public List<String> listaProvedoresEmail() {
+        return usuarioRepository.listaProvedoresEmail();
     }
 
-    public List<UsuarioSemSenhaDTO> listaUsuariosPelaInicial(Character character) throws ObjetoNaoEncontradoException {
-        List<UsuarioSemSenhaDTO> users = usuarioRepository.listaUsuariosPelaInicial(character);
-        if (users.size() < 1) {
-            throw new ObjetoNaoEncontradoException("Nenhum usuário encontrado");
-        }
-        return users;
+    public List<UsuarioSemSenhaDTO> listaUsuariosPelaInicial(Character character) {
+        return usuarioRepository.listaUsuariosPelaInicial(character);
     }
 
-    public List<UsuarioSemSenhaDTO> listaTodosUsuarios() throws ObjetoNaoEncontradoException {
-
-        List<UsuarioSemSenhaDTO> users = usuarioRepository.listaTodosUsuarios();
-        if (users.size() < 1) {
-            throw new ObjetoNaoEncontradoException("Nenhum usuário encontrado");
-        }
-        return users;
+    public List<UsuarioSemSenhaDTO> listaTodosUsuarios() {
+        return usuarioRepository.listaTodosUsuarios();
     }
 
-    public UsuarioSemSenhaDTO buscaUsuarioRetornaDTO(Long id) throws ObjetoNaoEncontradoException {
-        UsuarioSemSenhaDTO user = usuarioRepository.buscaUsuarioRetornaDTO(id);
-        if (user == null) {
-            throw new ObjetoNaoEncontradoException("Nenhum usuário encontrado");
-        }
-        return user;
+    public UsuarioSemSenhaDTO buscaUsuarioRetornaDTO(Long id) {
+        return usuarioRepository.buscaUsuarioRetornaDTO(id);
     }
 
     private static void descriptaSenha(Usuario usuario) {
@@ -149,7 +127,8 @@ public class UsuarioService {
         }
     }
 
-    private static void verificaNome(Usuario usuario) throws MaiorQuePermitidoException, NaoVazioException, NaoNuloException {
+    private static void verificaNome(Usuario usuario) throws MaiorQuePermitidoException, NaoVazioException,
+            NaoNuloException {
         if (usuario.getNome().length() > 50) {
             throw new MaiorQuePermitidoException("Nome não pode ter mais que 50 letras");
         } else if (usuario.getNome().isBlank()) {

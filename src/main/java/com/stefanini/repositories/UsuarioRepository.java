@@ -1,8 +1,8 @@
-package com.stefanini.repository;
+package com.stefanini.repositories;
 
 import com.stefanini.dao.GenericDAO;
 import com.stefanini.dto.UsuarioSemSenhaDTO;
-import com.stefanini.entity.Usuario;
+import com.stefanini.entities.Usuario;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.NoResultException;
@@ -33,8 +33,9 @@ public class UsuarioRepository extends GenericDAO<Usuario, Long> {
     }
 
     public List<UsuarioSemSenhaDTO> listaTodosUsuarios() {
-        List<Usuario> usuarios = this.listAll();
-        return usuarios.stream().map(UsuarioSemSenhaDTO::new).collect(Collectors.toList());
+        Stream<Usuario> usuarios = createQuery("FROM Usuario ORDER BY nome", Usuario.class)
+                .getResultStream();
+        return usuarios.map(UsuarioSemSenhaDTO::new).collect(Collectors.toList());
     }
 
     public UsuarioSemSenhaDTO buscaUsuarioRetornaDTO(Long id) {

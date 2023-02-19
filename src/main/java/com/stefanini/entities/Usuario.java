@@ -1,4 +1,4 @@
-package com.stefanini.entity;
+package com.stefanini.entities;
 
 import com.stefanini.dto.UsuarioCriacaoDTO;
 
