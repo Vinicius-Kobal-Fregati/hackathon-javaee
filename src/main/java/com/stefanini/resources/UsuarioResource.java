@@ -38,6 +38,8 @@ public class UsuarioResource {
         try {
             UsuarioSemSenhaDTO usuarioSemSenhaDTO = usuarioService.atualizaUsuario(id, usuarioCriacaoDTO);
             return Response.status(Response.Status.OK).entity(usuarioSemSenhaDTO).build();
+        } catch (ObjetoNaoEncontradoException e) {
+            return criaUsuario(usuarioCriacaoDTO);
         } catch (BadRequestException e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         }
@@ -58,59 +60,39 @@ public class UsuarioResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response listaTodosUsuarios() {
-        try {
-            List<UsuarioSemSenhaDTO> usuarios = usuarioService.listaTodosUsuarios();
-            return Response.status(Response.Status.OK).entity(usuarios).build();
-        } catch (ObjetoNaoEncontradoException e) {
-            return Response.status(Response.Status.NO_CONTENT).build();
-        }
+        return Response.status(Response.Status.OK)
+                .entity(usuarioService.listaTodosUsuarios()).build();
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/aniversariantes/{numeroDoMes}")
-    public Response listaAniversariantes(@PathParam("numeroDoMes") Integer month) {
-        try {
-            List<UsuarioSemSenhaDTO> usuariosSemSenhaDTO = usuarioService.listaAniversariantes(month);
-            return Response.status(Response.Status.OK).entity(usuariosSemSenhaDTO).build();
-        } catch (ObjetoNaoEncontradoException e) {
-            return Response.status(Response.Status.NO_CONTENT).build();
-        }
+    public Response listaAniversariantes(@PathParam("numeroDoMes") Integer mes) {
+        return Response.status(Response.Status.OK)
+                .entity(usuarioService.listaAniversariantes(mes)).build();
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/emails")
     public Response listaProvedoresEmail() {
-        try {
-            List<String> listaProvedoresEmail = usuarioService.listaProvedoresEmail();
-            return Response.status(Response.Status.OK).entity(listaProvedoresEmail).build();
-        } catch (ObjetoNaoEncontradoException e) {
-            return Response.status(Response.Status.NO_CONTENT).build();
-        }
+        return Response.status(Response.Status.OK)
+                .entity(usuarioService.listaProvedoresEmail()).build();
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/primeira-letra-nome/{letra}")
     public Response listaUsuariosPelaInicial(@PathParam("letra") char letter) {
-        try {
-            List<UsuarioSemSenhaDTO> usuariosSemSenhaDTO = usuarioService.listaUsuariosPelaInicial(letter);
-            return Response.status(Response.Status.OK).entity(usuariosSemSenhaDTO).build();
-        } catch (ObjetoNaoEncontradoException e) {
-            return Response.status(Response.Status.NO_CONTENT).build();
-        }
+        return Response.status(Response.Status.OK)
+                .entity(usuarioService.listaUsuariosPelaInicial(letter)).build();
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/{id}")
     public Response buscaUsuarioPeloId(@PathParam("id") Long id) {
-        try {
-            UsuarioSemSenhaDTO usuario = usuarioService.buscaUsuarioRetornaDTO(id);
-            return Response.status(Response.Status.OK).entity(usuario).build();
-        } catch (ObjetoNaoEncontradoException e) {
-            return Response.status(Response.Status.NO_CONTENT).build();
-        }
+        return Response.status(Response.Status.OK)
+                .entity(usuarioService.buscaUsuarioRetornaDTO(id)).build();
     }
 }
